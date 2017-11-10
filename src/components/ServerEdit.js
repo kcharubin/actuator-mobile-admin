@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Button, Input, Card, CardSection } from './common';
-import { udpateForm, addServer, updateServer } from '../actions';
+import { updateForm, addServer, updateServer } from '../actions';
 import DoubleButton from './DoubleButton';
 
 class ServerEdit extends Component {
@@ -40,7 +40,7 @@ class ServerEdit extends Component {
                         <Input
                             label='Server name'
                             value={this.props.serverName}
-                            onChangeText={text => this.props.udpateForm({ prop: 'serverName', value: text })}
+                            onChangeText={text => this.props.updateForm({ prop: 'serverName', value: text })}
                             placeholder='My server'
                         />
                     </CardSection>
@@ -48,7 +48,7 @@ class ServerEdit extends Component {
                         <Input
                             label='Server url'
                             value={this.props.serverUrl}
-                            onChangeText={text => this.props.udpateForm({ prop: 'serverUrl', value: text })}
+                            onChangeText={text => this.props.updateForm({ prop: 'serverUrl', value: text })}
                             placeholder='https://myserver.com/'
                         />
                     </CardSection>
@@ -56,7 +56,7 @@ class ServerEdit extends Component {
                         <Input
                             label='User name'
                             value={this.props.userName}
-                            onChangeText={text => this.props.udpateForm({ prop: 'userName', value: text })}
+                            onChangeText={text => this.props.updateForm({ prop: 'userName', value: text })}
                             placeholder='jon@example.com'
                         />
                     </CardSection>
@@ -64,15 +64,15 @@ class ServerEdit extends Component {
                         <Input
                             label='Password'
                             value={this.props.userPassword}
-                            onChangeText={text => this.props.udpateForm({ prop: 'userPassword', value: text })}
+                            onChangeText={text => this.props.updateForm({ prop: 'userPassword', value: text })}
                             secureTextEntry
                         />
                     </CardSection>
                     <CardSection>
                         <Button>Test connection</Button>
-                    </CardSection>           
+                    </CardSection>
                     <CardSection>
-                        <DoubleButton 
+                        <DoubleButton
                             leftBtnName="Cancel"
                             leftBtnCallback={() => this.cancelClicked()}
                             rightBtnName="Save"
@@ -89,4 +89,4 @@ const mapStateToProps = (state) => {
     const { serverName, serverUrl, userPassword, userName, serverId } = state.form;
     return { serverName, serverUrl, userPassword, userName, serverId };
 };
-export default connect(mapStateToProps, { udpateForm, addServer, updateServer })(ServerEdit);
+export default connect(mapStateToProps, { updateForm, addServer, updateServer })(ServerEdit);

@@ -19,9 +19,6 @@ export default (state = INITIAL_STATE, action) => {
             const server = action.payload;
 
             let serverId = server.serverId;
-            console.log("serer id");
-            console.log(server);
-            console.log(serverId);
             if (!serverId) {
                 serverId = uuid();
             }

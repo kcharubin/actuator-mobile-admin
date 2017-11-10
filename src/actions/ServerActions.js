@@ -91,8 +91,7 @@ export const createServerEndpoint = (server) => (dispatch) => {
     );
 };
 
-
-export const udpateForm = ({ prop, value }) => (
+export const updateForm = ({ prop, value }) => (
     {
         type: UPDATE_FORM,
         payload: { prop, value }

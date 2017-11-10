@@ -4,15 +4,15 @@ import React from 'react';
 import { CardSection } from './common';
 
 
-const ServerListItem = ({ server, onPress, onAccessoryPress }) => {
+const ListItem = ({ title, onPress, onAccessoryPress, accessoryTitle }) => {
     const { textStyle, btnContainer, editStyle } = styles;
     return (
         <TouchableOpacity onPress={() => onPress()}>
             <CardSection>
                 <View style={btnContainer}>
-                    <Text style={textStyle}>{server.serverName}</Text>
+                    <Text style={textStyle}>{title}</Text>
                     <TouchableOpacity onPress={() => onAccessoryPress()}>
-                        <Text style={editStyle}>Edit</Text>
+                        <Text style={editStyle}>{accessoryTitle}</Text>
                     </TouchableOpacity>
                 </View>
             </CardSection>
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
     }
 }
 );
-export default ServerListItem;
+export default ListItem;

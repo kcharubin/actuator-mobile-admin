@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import { Button, Card, CardSection } from './common';
-import ServerListeItem from './ServerListItem';
+import ListItem from './ListItem';
 import { createServer, selectServer, editServer } from '../actions/ServerActions';
 
 
@@ -32,9 +32,10 @@ class MainScreen extends Component {
 
     renderRow(server) {
         return (
-            <ServerListeItem
-                server={server}
+            <ListItem
+                title={server.serverName}
                 onPress={() => this.props.selectServer(server)}
+                accessoryTitle="Edit"
                 onAccessoryPress={() => this.props.editServer(server)}
             />
         );

@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import { selectServerEndpoint, createServerEndpoint } from '../actions/ServerActions';
 import { Card, CardSection, Button } from './common';
-import EndpointListItem from './EndpointListItem';
+import ListItem from './ListItem';
 
 class ServerEndpoints extends Component {
 
@@ -39,10 +39,12 @@ class ServerEndpoints extends Component {
     }
 
     renderRow(endpoint) {
-        return (
-            <EndpointListItem
-                endpoint={endpoint}
+        return (  
+            <ListItem
+                title={endpoint.endpointName}
                 onPress={() => this.props.selectServerEndpoint(endpoint)}
+                accessoryTitle="Edit"
+                onAccessoryPress={() => console.log("edit")}
             />
         );
     }
@@ -84,9 +86,6 @@ const styles = StyleSheet.create(
 );
 const mapStateToProps = state => {
     const { servers, selectedOption: { serverId } } = state;
-    const endpoints = _.map(servers[serverId].endpoints, (val, endpointId) => ({ ...val, endpointId }));
-    console.log(endpoints);
-
     return {
         endpoints: _.map(servers[serverId].endpoints, (val, endpointId) => ({ ...val, endpointId })),
         server: servers[serverId]
