@@ -14,6 +14,7 @@ export const FETCH_ENDPOINT = 'fetch_endpoint';
 export const FETCH_ENDPOINT_SUCCESS = 'fetch_endpoint_success';
 export const FETCH_ENDPOINT_FAILURE = 'fetch_endpoint_failure';
 export const DELETE_SERVER = 'delete_server';
+export const NAVIGATE = 'navigate_action';
 
 export const INITIAL_ENDPOINTS = {
     e1: {

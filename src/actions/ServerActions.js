@@ -10,21 +10,31 @@ import {
     EDIT_SERVER,
     EDIT_SERVER_ENDPOINT,
     NEW_ENDPOINT,
-    DELETE_SERVER
+    DELETE_SERVER,
+    NAVIGATE
 } from './types';
 
 
-import { navigatorRef } from '../App';
+export const navigateAction = (routeParams) => (
+    {
+        type: NAVIGATE,   
+        payload: routeParams
+    }
+);
 
 export const createServer = () => (dispatch) => {
     dispatch({
         type: NEW_SERVER,
         payload: null
     });
-    navigatorRef.dispatch(
-        NavigationActions.navigate({ routeName: 'ServerAdd', params: { addServ: true } })
+    // navigatorRef.dispatch(
+    //     NavigationActions.navigate({ routeName: 'ServerAdd', params: { addServ: true } })
+    // );
+    dispatch(
+        navigateAction({ routeName: 'ServerAdd', params: { addServ: true } })
     );
 };
+
 
 export const addServer = (server) => (
     {
@@ -52,8 +62,8 @@ export const editServer = (server) => (dispatch) => {
         type: EDIT_SERVER,
         payload: server
     });
-    navigatorRef.dispatch(
-        NavigationActions.navigate({ routeName: 'ServerEdit' })
+    dispatch(
+        navigateAction({ routeName: 'ServerEdit' })
     );
 };
 
@@ -62,9 +72,9 @@ export const selectServer = (server) => (dispatch) => {
         type: SELECT_SERVER,
         payload: server
     });
-    navigatorRef.dispatch(
-        NavigationActions.navigate({ routeName: 'ServerEndpoints' })
-    );
+    dispatch(
+        navigateAction({ routeName: 'ServerEndpoints' })
+    ); 
 };
 
 
@@ -73,9 +83,9 @@ export const selectServerEndpoint = (endpoint) => (dispatch) => {
         type: SELECT_SERVER_ENDPOINT,
         payload: endpoint
     });
-    navigatorRef.dispatch(
-        NavigationActions.navigate({ routeName: 'EndpointDetails' })
-    );
+    dispatch(
+        navigateAction({ routeName: 'EndpointDetails' })
+    ); 
 };
 
 export const editServerEndpoint = (endpoint) => (dispatch) => {
@@ -83,19 +93,19 @@ export const editServerEndpoint = (endpoint) => (dispatch) => {
         type: EDIT_SERVER_ENDPOINT,
         payload: endpoint
     });
-    navigatorRef.dispatch(
-        NavigationActions.navigate({ routeName: 'EndpointEdit' })
-    );
+    dispatch(
+        navigateAction({ routeName: 'EndpointEdit' })
+    ); 
 };
 
-export const createServerEndpoint = (server) => (dispatch) => {  
+export const createServerEndpoint = (server) => (dispatch) => {
     dispatch({
         type: NEW_ENDPOINT,
         payload: server
     });
-    navigatorRef.dispatch(
-        NavigationActions.navigate({ routeName: 'EndpointAdd', params: { addServ: true } })
-    );
+    dispatch(
+        navigateAction({ routeName: 'EndpointAdd' })
+    ); 
 };
 
 export const updateForm = ({ prop, value }) => (

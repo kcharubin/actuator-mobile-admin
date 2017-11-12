@@ -8,7 +8,7 @@ import { Text } from 'react-native';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 
-import { MainNavigator } from './navigators/MainNavigator';
+import MainNavigatorWithState from './navigators/MainNavigator';
 
 export let navigatorRef;
 
@@ -43,7 +43,7 @@ export default class App extends Component {
             navigatorRef = this.navigator;
           }}
         >
-          <MainNavigator ref={nav => { this.navigator = nav; }} />
+          <MainNavigatorWithState />
         </PersistGate>
       </Provider>
 
