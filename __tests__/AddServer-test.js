@@ -10,7 +10,8 @@ import {
 
 const INITIAL_STATE = {
     server_104: {
-        serverName: 'moj server'
+        serverName: 'moj server',
+        serverId: '104'
     }
 };
 
@@ -34,7 +35,8 @@ describe('test adding servers, actions, routers, redux state', () => {
     });
     test('test add serer reducer', () => {
         console.log({ ...INITIAL_STATE });
-        var reducerResult = ServerReducer(INITIAL_STATE, { type: ADD_SERVER, payload: { serverName: 'My super server', serverId:"ttt" } });
+        var reducerResult = ServerReducer(INITIAL_STATE, { type: ADD_SERVER, payload: { serverName: 'My super server', serverId: "ttt" } });
+        
         console.log(reducerResult);
     });
 
@@ -52,3 +54,11 @@ describe('test adding servers, actions, routers, redux state', () => {
     });
 }
 );
+
+describe('Adding and editing actuator endpoints', () => {
+    test('test adding endpoint', () => {
+
+
+     });
+
+});

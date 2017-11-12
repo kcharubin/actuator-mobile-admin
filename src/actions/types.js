@@ -10,6 +10,10 @@ export const UPDATE_SERVER = 'update_server';
 export const SELECT_SERVER = 'select_server';
 export const SELECT_SERVER_ENDPOINT = 'select_server_endpoint';
 export const EDIT_SERVER_ENDPOINT = 'edit_server_endpoint';
+export const FETCH_ENDPOINT = 'fetch_endpoint';
+export const FETCH_ENDPOINT_SUCCESS = 'fetch_endpoint_success';
+export const FETCH_ENDPOINT_FAILURE = 'fetch_endpoint_failure';
+export const DELETE_SERVER = 'delete_server';
 
 export const INITIAL_ENDPOINTS = {
     e1: {
@@ -28,12 +32,12 @@ export const INITIAL_ENDPOINTS = {
 
 export const SERVER_TEMPLATE = {
     serverName: 'moj server',
-    serverUrl: 'https://192.168.1.7:8585/',
+    serverUrl: 'https://localhost:8585/',
     basicAuth: {
-        userName: '',
-        userPassword: '',
+        userName: 'john123',
+        userPassword: 'password',
         loading: false,
         error: ''
     },
-    endpoints: INITIAL_ENDPOINTS
+    endpoints: { ...INITIAL_ENDPOINTS }
 };

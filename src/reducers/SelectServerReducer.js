@@ -1,5 +1,8 @@
-import { SELECT_SERVER, SELECT_SERVER_ENDPOINT } from '../actions/types';
-import { navigatorRef } from '../App';
+import { 
+    SELECT_SERVER, 
+    SELECT_SERVER_ENDPOINT,
+    EDIT_SERVER_ENDPOINT
+} from '../actions/types';
 
 const INITIAL_STATE = {
     serverId: null,
@@ -9,13 +12,13 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case SELECT_SERVER: {
-            console.log("serlect server");
-            console.log(action);
             return { ...state, serverId: action.payload.serverId };
         }
+        case EDIT_SERVER_ENDPOINT:
         case SELECT_SERVER_ENDPOINT: {
             return { ...state, endpointId: action.payload.endpointId };
         }
+
         default:
             return state;
     }

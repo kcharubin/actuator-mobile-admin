@@ -9,7 +9,8 @@ import {
     UPDATE_FORM,
     EDIT_SERVER,
     EDIT_SERVER_ENDPOINT,
-    NEW_ENDPOINT
+    NEW_ENDPOINT,
+    DELETE_SERVER
 } from './types';
 
 
@@ -29,6 +30,12 @@ export const addServer = (server) => (
     {
         type: ADD_SERVER,
         payload: server
+    }
+);
+export const deleteServer = (serverId) => (
+    {
+        type: DELETE_SERVER,
+        payload: serverId
     }
 );
 

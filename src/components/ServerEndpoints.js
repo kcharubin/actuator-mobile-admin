@@ -3,7 +3,11 @@ import { View, Text, StyleSheet, ListView } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { selectServerEndpoint, createServerEndpoint } from '../actions/ServerActions';
+import {
+    selectServerEndpoint,
+    createServerEndpoint,
+    editServerEndpoint
+} from '../actions/ServerActions';
 import { Card, CardSection, Button } from './common';
 import ListItem from './ListItem';
 
@@ -30,8 +34,6 @@ class ServerEndpoints extends Component {
     }
 
     createDataSource({ endpoints }) {
-        console.log("create data source");
-        console.log(endpoints);
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
@@ -39,12 +41,12 @@ class ServerEndpoints extends Component {
     }
 
     renderRow(endpoint) {
-        return (  
+        return (
             <ListItem
                 title={endpoint.endpointName}
                 onPress={() => this.props.selectServerEndpoint(endpoint)}
                 accessoryTitle="Edit"
-                onAccessoryPress={() => console.log("edit")}
+                onAccessoryPress={() => this.props.editServerEndpoint(endpoint)}
             />
         );
     }
@@ -87,13 +89,16 @@ const styles = StyleSheet.create(
 const mapStateToProps = state => {
     const { servers, selectedOption: { serverId } } = state;
     return {
-        endpoints: _.map(servers[serverId].endpoints, (val, endpointId) => ({ ...val, endpointId })),
-        server: servers[serverId]
+        endpoints: _.map(servers[serverId].endpoints, (val, endpointId) => (
+            { ...val, endpointId }
+        )),
+        server: { ...servers[serverId], serverId }
     };
 };
 
 
 export default connect(mapStateToProps, {
     selectServerEndpoint,
-    createServerEndpoint
+    createServerEndpoint,
+    editServerEndpoint
 })(ServerEndpoints);

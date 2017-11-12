@@ -1,10 +1,12 @@
+import uuid from 'uuid';
+
 import {
     UPDATE_FORM,
     NEW_SERVER,
-    EDIT_SERVER
+    NEW_ENDPOINT,
+    EDIT_SERVER,
+    EDIT_SERVER_ENDPOINT
 } from '../actions/types';
-import uuid from 'uuid';
-
 
 const INITIAL_STATE = {
     serverName: '',
@@ -16,6 +18,12 @@ const INITIAL_STATE = {
     endpointName: '',
     endpointUrl: ''
 
+};
+
+const INITIAL_ENDPOINT_STATE = {
+    endpointId: '',
+    endpointName: '',
+    endpointUrl: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -32,6 +40,13 @@ export default (state = INITIAL_STATE, action) => {
             const { serverName, serverUrl, serverId, basicAuth: { userName, userPassword } } = action.payload;
             return { ...INITIAL_STATE, serverName, serverUrl, userName, userPassword, serverId };
         }
+        case EDIT_SERVER_ENDPOINT: {
+            return { ...INITIAL_STATE, ...action.payload };
+        }
+        case NEW_ENDPOINT: {
+            return { ...state, ...INITIAL_ENDPOINT_STATE };
+        }
+  
         default:
             return state;
     }
