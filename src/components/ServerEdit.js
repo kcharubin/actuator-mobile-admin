@@ -40,7 +40,7 @@ class ServerEdit extends Component {
     cancelClicked() {
         this.props.navigation.goBack();
     }
-    
+
     saveClicked() {
         const { serverName, serverUrl, userPassword, userName, serverId } = this.props;
         const server = {
@@ -98,9 +98,6 @@ class ServerEdit extends Component {
                             onChangeText={text => this.props.updateForm({ prop: 'userPassword', value: text })}
                             secureTextEntry
                         />
-                    </CardSection>
-                    <CardSection>
-                        <Button>Test connection</Button>
                     </CardSection>
                     <CardSection>
                         <DoubleButton
