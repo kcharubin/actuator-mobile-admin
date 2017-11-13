@@ -22,7 +22,7 @@ const ListItem = ({ title, onPress, onAccessoryPress, accessoryTitle }) => {
 };
 const styles = StyleSheet.create({
     btnContainer: {
-        padding: 10,
+        padding: 0,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -31,13 +31,12 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         fontSize: 18,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        lineHeight: 40,    
     },
     editStyle: {
         lineHeight: 40,
-        paddingLeft: 30,
-        marginTop: -15,
-        marginBottom: -15
+        paddingLeft: 30, 
     }
 }
 );
