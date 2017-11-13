@@ -6,8 +6,6 @@ const firstAction = MainNavigator.router.getActionForPathAndParams('Main');
 const tempNavState = MainNavigator.router.getStateForAction(firstAction);
 
 export default (state = tempNavState, action) => {
-    console.log('navigator reducer');
-    console.log(state);
     switch (action.type) {
         case 'Navigation/BACK': {
             return MainNavigator.router.getStateForAction(
