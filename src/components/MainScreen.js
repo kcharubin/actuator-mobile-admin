@@ -11,7 +11,6 @@ import { createServer, selectServer, editServer } from '../actions/ServerActions
 class MainScreen extends Component {
     constructor(props) {
         super(props);
-        console.log(this);
         this.renderRow = this.renderRow.bind(this);
     }
     componentWillMount() {
@@ -23,7 +22,6 @@ class MainScreen extends Component {
     }
 
     createDataSource({ servers }) {
-        console.log(servers);
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });

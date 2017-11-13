@@ -34,10 +34,7 @@ describe('test adding servers, actions, routers, redux state', () => {
             );
     });
     test('test add serer reducer', () => {
-        console.log({ ...INITIAL_STATE });
         var reducerResult = ServerReducer(INITIAL_STATE, { type: ADD_SERVER, payload: { serverName: 'My super server', serverId: "ttt" } });
-        
-        console.log(reducerResult);
     });
 
     test('update existing server ', () => {

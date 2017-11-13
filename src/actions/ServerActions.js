@@ -1,5 +1,3 @@
-import { NavigationActions } from 'react-navigation';
-
 import {
     ADD_SERVER,
     NEW_SERVER,
@@ -22,14 +20,17 @@ export const navigateAction = (routeParams) => (
     }
 );
 
+export const navigateBack = () => (
+    {
+        type: 'Navigation/BACK'
+    }
+);
+
 export const createServer = () => (dispatch) => {
     dispatch({
         type: NEW_SERVER,
         payload: null
     });
-    // navigatorRef.dispatch(
-    //     NavigationActions.navigate({ routeName: 'ServerAdd', params: { addServ: true } })
-    // );
     dispatch(
         navigateAction({ routeName: 'ServerAdd', params: { addServ: true } })
     );

@@ -1,58 +1,61 @@
 import React, { Component } from 'react';
-import { Button as NativeButton, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
 import { CardSection, Card, Input } from './common';
 import DoubleButton from './DoubleButton';
-import { updateForm, updateServer } from '../actions';
+import { updateForm, updateServer, navigateBack } from '../actions';
+import RightNavButton from './RightNavButton';
+
+const mapStateToProps = (state) => {
+    const { endpointName, endpointUrl } = state.form;
+    const { serverId, endpointId } = state.selectedOption;
+    const server = { ...state.servers[serverId], serverId };
+    return { endpointName, endpointUrl, server, endpointId };
+};
+
+const RightNavButtonConnected = connect(
+    mapStateToProps,
+    {
+        updateServer,
+        navigateBack
+    }
+)(RightNavButton);
 
 class EndpointEdit extends Component {
-    static navigationOptions = ({ navigation }) => {
-        const { params = {} } = navigation.state;
+    static navigationOptions = () => {
         const headerRight = (
-            <NativeButton
+            <RightNavButtonConnected
                 title="Delete"
-                onPress={params.deleteEndpoint ? params.deleteEndpoint : () => null}
+                alertTitle="Delete endpoint"
+                shouldConfirm
+                alertMsg="Are you sure that you want to delete this endpoint"
+                onPress={(props) => {
+                    const { endpointId, server } = props;
+                    if (endpointId) {
+                        delete server.endpoints[endpointId];
+                        props.updateServer(server);
+                    }
+                    props.navigateBack();
+                }
+                }
+
             />
         );
+
         return { headerRight };
     };
-    constructor() {
-        super();
-        this.deleteEndpoint = this.deleteEndpoint.bind(this);
-    }
+
     componentDidMount() {
         this.props.navigation.setParams({ deleteEndpoint: this.deleteEndpoint });
     }
-    deleteEndpoint() {
-        Alert.alert(
-            'Delete endpoint',
-            'Are you sure that you want to delete this endpoint?',
-            [
-                { text: 'Cancel', onPress: () => { }, style: 'cancel' },
-                { text: 'OK', onPress: () => this.deleteEndpointConfirmed() },
-            ],
-            { cancelable: false }
-        );
-    }
-
-    deleteEndpointConfirmed() {
-        const { endpointId, server } = this.props;
-        if (endpointId) {
-            delete server.endpoints[endpointId];
-            this.props.updateServer(server);
-        }
-        this.props.navigation.goBack();
-    }
-
+   
     saveEndpoint() {
-        console.log("PROPS");
-        console.log(this.props);
         const endpointId = this.props.endpointId || uuid();
         const { endpointName, endpointUrl, server } = this.props;
         const endpoint = { endpointName, endpointUrl };
         server.endpoints[endpointId] = endpoint;
         this.props.updateServer(server);
+        this.props.navigateBack();
     }
 
     render() {
@@ -87,12 +90,4 @@ class EndpointEdit extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    console.log(state);
-    const { endpointName, endpointUrl } = state.form;
-    const { serverId, endpointId } = state.selectedOption;
-    const server = { ...state.servers[serverId], serverId };
-    return { endpointName, endpointUrl, server, endpointId };
-};
-
-export default connect(mapStateToProps, { updateForm, updateServer })(EndpointEdit);
+export default connect(mapStateToProps, { updateForm, updateServer, navigateBack })(EndpointEdit);

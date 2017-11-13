@@ -21,7 +21,6 @@ class ServerEndpoints extends Component {
 
 
     componentWillMount() {
-        console.log(this.props);
         this.createDataSource(this.props);
     }
 

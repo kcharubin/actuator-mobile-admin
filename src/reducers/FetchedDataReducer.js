@@ -13,20 +13,16 @@ const INITIAL_RESPONSE_PARAMS = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-  
+
     switch (action.type) {
-         case FETCH_ENDPOINT: {
+        case FETCH_ENDPOINT: {
             const { endpointId } = action.endpoint;
-            console.log("EEE");
-            console.log(action.endpoint);
             const currentResponse = state[endpointId] || INITIAL_RESPONSE_PARAMS;
             return {
                 ...state, [endpointId]: { ...currentResponse, ...INITIAL_RESPONSE_PARAMS }
             };
         }
         case FETCH_ENDPOINT_SUCCESS: {
-            console.log('axios sucess');
-            console.log(action);
             const lastResponse = {
                 time: Date(),
                 data: action.payload,
@@ -36,11 +32,13 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, [action.endpoint.endpointId]: lastResponse };
         }
         case FETCH_ENDPOINT_FAILURE: {
-            console.log('axios failure');
-            console.log(action);
-            return {};
+            const lastResponse = {
+                time: Date(),
+                data: action.error,
+                loading: false
+            };
+            return { ...state, [action.endpoint.endpointId]: lastResponse };
         }
-
         default:
             return state;
     }

@@ -10,37 +10,25 @@ import reducers from './reducers';
 
 import MainNavigatorWithState from './navigators/MainNavigator';
 
-export let navigatorRef;
 
 export default class App extends Component {
-  componentDidMount() {
-    console.log('compinent did moount navigator');
-    console.log(this.navigator);
-    navigatorRef = this.navigator;
-  }
   render() {
     const storeConfig = {
       key: 'rootStore', // key is required
       storage,
+      blacklist: ['nav']
     };
-
     const persistedReducer = persistReducer(storeConfig, reducers);
-
     const middleware = applyMiddleware(thunk);
     const store = createStore(persistedReducer, {}, middleware);
     const persistor = persistStore(store);
-
     persistStore(store);
-    console.log('app rendered');
     return (
       <Provider store={store}>
         <PersistGate
           persistor={persistor}
           loading={<Text>Loading</Text>}
           onBeforeLift={() => {
-            console.log('nav2');
-            console.log(this.navigator);
-            navigatorRef = this.navigator;
           }}
         >
           <MainNavigatorWithState />
