@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View, ListView, StyleSheet } from 'react-native';
+import { View, ListView, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { Button, Card, CardSection } from './common';
+import { Button, TransparentCardSection } from './common';
 import ListItem from './ListItem';
 import { createServer, selectServer, editServer } from '../actions/ServerActions';
 
@@ -38,27 +38,39 @@ class MainScreen extends Component {
             />
         );
     }
-
+    renderAddButton() {
+        return (
+            <TransparentCardSection>
+                <Button
+                    onPress={() => this.props.createServer()}
+                >
+                    Add server
+                </Button>
+            </TransparentCardSection>
+        );
+    }
     render() {
-        const { listStyle, contentContainer } = styles;
+        const { listStyle, contentContainer, noDataTextStyle } = styles;
+        if (this.DataSource.getRowCount()) {
+            return (
+                <View style={contentContainer}>
+                    <ListView
+                        style={listStyle}
+                        enableEmptySections
+                        dataSource={this.DataSource}
+                        renderRow={this.renderRow}
+                    />
+                    {this.renderAddButton()}
+                </View>
+            );
+        }
+
         return (
             <View style={contentContainer}>
-                <ListView
-                    style={listStyle}
-                    enableEmptySections
-                    dataSource={this.DataSource}
-                    renderRow={this.renderRow}
-                />
-                <Card>
-                    <CardSection>
-                        <Button
-                            onPress={() => this.props.createServer()}
-                        >
-                            Add server
-                            </Button>
-                    </CardSection>
-                </Card>
+                <Text style={noDataTextStyle}>Please add your first server!</Text>
+                {this.renderAddButton()}
             </View>
+
         );
     }
 }
@@ -67,10 +79,17 @@ const styles = StyleSheet.create(
         listStyle: {
             flex: 1
         },
+        noDataTextStyle: {
+            flex: 1,
+            justifyContent: 'center',
+            textAlign: 'center',
+            fontSize: 16,
+            padding: 20
+        },
         contentContainer: {
             flex: 1,
             paddingBottom: 20
-        },
+        }
     }
 
 );

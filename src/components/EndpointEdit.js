@@ -63,7 +63,7 @@ class EndpointEdit extends Component {
             <Card>
                 <CardSection>
                     <Input
-                        label='Endpoint Name'
+                        label='Name'
                         value={this.props.endpointName}
                         onChangeText={text => this.props.updateForm({ prop: 'endpointName', value: text })}
                         placeholder='Health'
@@ -71,7 +71,7 @@ class EndpointEdit extends Component {
                 </CardSection>
                 <CardSection>
                     <Input
-                        label='Endpoint URL'
+                        label='URL'
                         value={this.props.endpointUrl}
                         onChangeText={text => this.props.updateForm({ prop: 'endpointUrl', value: text })}
                         placeholder='/health'

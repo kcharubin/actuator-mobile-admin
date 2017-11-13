@@ -10,7 +10,6 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-    server_104: SERVER_TEMPLATE
 };
 
 

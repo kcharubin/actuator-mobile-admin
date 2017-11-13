@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ListView } from 'react-native';
+import { View, StyleSheet, ListView } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
@@ -8,7 +8,7 @@ import {
     createServerEndpoint,
     editServerEndpoint
 } from '../actions/ServerActions';
-import { Card, CardSection, Button } from './common';
+import { TransparentCardSection, Button } from './common';
 import ListItem from './ListItem';
 
 class ServerEndpoints extends Component {
@@ -60,15 +60,13 @@ class ServerEndpoints extends Component {
                     dataSource={this.DataSource}
                     renderRow={this.renderRow}
                 />
-                <Card>
-                    <CardSection>
-                        <Button
-                            onPress={() => this.props.createServerEndpoint(this.props.server)}
-                        >
-                            Add endpoint
+                <TransparentCardSection>
+                    <Button
+                        onPress={() => this.props.createServerEndpoint(this.props.server)}
+                    >
+                        Add endpoint
                         </Button>
-                    </CardSection>
-                </Card>
+                </TransparentCardSection>
             </View>
         );
     }
