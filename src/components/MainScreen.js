@@ -77,7 +77,8 @@ class MainScreen extends Component {
 const styles = StyleSheet.create(
     {
         listStyle: {
-            flex: 1
+            flex: 1,
+            padding: 5
         },
         noDataTextStyle: {
             flex: 1,

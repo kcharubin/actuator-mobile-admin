@@ -74,7 +74,8 @@ class ServerEndpoints extends Component {
 const styles = StyleSheet.create(
     {
         listStyle: {
-            flex: 1
+            flex: 1,
+            padding: 5
         },
         contentContainer: {
             flex: 1,
