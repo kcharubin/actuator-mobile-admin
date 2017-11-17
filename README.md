@@ -29,8 +29,8 @@ Copyright (c) 2017 Kamil Charubin
 <img align="left" src="/screenshots/actuator-endpointlist.png?raw=true" width="250" height="445"/>
 <img align="left" src="/screenshots/actuator-addserver.png?raw=true" width="250" height="445"/> 
 <img align="left" src="/screenshots/actuator-health.png?raw=true" width="250" height="445"/> 
-<img align="left" src="/screenshots/actuator-health.png?raw=true" width="250" height="445"/> 
-<img align="left" src="/screenshots/actuator-health.png?raw=true" width="250" height="445"/>  
+<img align="left" src="/screenshots/actuator-metrics.png?raw=true" width="250" height="445"/> 
+<img align="left" src="/screenshots/actuator-addendpoint.png?raw=true" width="250" height="445"/>  
 </p>
 
  
