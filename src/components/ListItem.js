@@ -8,7 +8,7 @@ const ListItem = ({ title, onPress, onAccessoryPress, accessoryTitle }) => {
     const { textStyle, btnContainer, editStyle } = styles;
     return (
         <TouchableOpacity onPress={() => onPress()}>
-            <CardSection>
+            <CardSection style={{ paddingTop: 0, paddingBottom: 0 }}>
                 <View style={btnContainer}>
                     <Text style={textStyle}>{title}</Text>
                     <TouchableOpacity onPress={() => onAccessoryPress()}>
@@ -32,11 +32,15 @@ const styles = StyleSheet.create({
     textStyle: {
         fontSize: 18,
         fontWeight: 'bold',
-        lineHeight: 40,    
+        lineHeight: 40,
+        marginTop: 5,
+        marginBottom: 5
     },
     editStyle: {
-        lineHeight: 40,
-        paddingLeft: 30, 
+        lineHeight: 50,
+        paddingLeft: 40,
+        paddingRight: 10,
+        marginRight: -10,
     }
 }
 );
