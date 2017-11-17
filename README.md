@@ -21,10 +21,12 @@ At the moment application supports only basic authentication, so you should conf
 ## Actuator documentation
 For Acutator endpoints description please refer to [this documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html)
 ## Screenshots
-<img src="/screenshots/actuator-serverlist.png?raw=true" width="250"/> 
-<img src="/screenshots/actuator-endpointlist.png?raw=true" width="250"/>
-<img src="/screenshots/actuator-addserver.png?raw=true" width="250"/> 
-<img src="/screenshots/actuator-health.png?raw=true" width="250"/> 
+<div>
+<img align="left" src="/screenshots/actuator-serverlist.png?raw=true" width="250"/> 
+<img align="left" src="/screenshots/actuator-endpointlist.png?raw=true" width="250"/>
+<img align="left" src="/screenshots/actuator-addserver.png?raw=true" width="250"/> 
+<img align="left" src="/screenshots/actuator-health.png?raw=true" width="250"/> 
+  </div>
 
 ## Licence
 
