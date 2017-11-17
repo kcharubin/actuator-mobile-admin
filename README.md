@@ -18,6 +18,19 @@ At the moment application supports only basic authentication, so you should conf
 2. Installed Actuator. For detailed instructions please refer to this [terrific article](http://www.baeldung.com/spring-boot-actuators)
 3. Configured basic authentication for Actuator endpoints
 4. User account with [**ACTUATOR**](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-security-actuator) role
+5. Build Actuator mobile app
+Clone repo and run: 
+
+```
+$ npm install
+$ react-native run-ios
+```
+or
+```
+$ npm install
+$ react-native run-android
+```
+
 ## Actuator documentation
 For Acutator endpoints description please refer to [this documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html)
 ## Licence
