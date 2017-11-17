@@ -20,7 +20,8 @@ At the moment application supports only basic authentication, so you should conf
 4. User account with [**ACTUATOR**](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-security-actuator) role
 ## Actuator documentation
 For Acutator endpoints description please refer to [this documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html)
-## Screens
+## Screenshots
+[Health](/screenshots/actuator-health.png)
 ## Licence
 
 MIT License
