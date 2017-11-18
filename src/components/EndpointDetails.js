@@ -19,7 +19,7 @@ class EndpointDetails extends Component {
     onRefresh() {
         const { lastResponse } = this.props;
 
-        if (!lastResponse || lastResponse.loading === true) {
+        if (lastResponse && lastResponse.loading === true) {
             return;
         }
         this.props.fetchEndpoint(this.props.server, this.props.endpoint);
@@ -43,7 +43,12 @@ class EndpointDetails extends Component {
         );
     }
     render() {
-        const { lastResponse: { time } } = this.props;
+        const { lastResponse } = this.props;
+        let timeString = '';
+        if (lastResponse) {
+            let time = lastResponse.time;
+            timeString = time ? time.toLocaleString() : '';
+        }
         return (
             <ScrollView
                 refreshControl={
@@ -53,7 +58,7 @@ class EndpointDetails extends Component {
                     />
                 }
             >
-                <Text style={styles.actualizationDateContainer}>{time.toLocaleString()}</Text>
+                <Text style={styles.actualizationDateContainer}>{timeString}</Text>
                 {this.renderLastResponse()}
             </ScrollView>
         );
