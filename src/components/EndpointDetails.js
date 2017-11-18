@@ -1,32 +1,39 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View, RefreshControl } from 'react-native';
 import JSONTree from 'react-native-json-tree';
 import { Spinner } from './common';
 
 import { fetchEndpoint } from '../actions';
 
 class EndpointDetails extends Component {
+    constructor() {
+        super();
+        this.onRefresh = this.onRefresh.bind(this);
+    }
 
     componentDidMount() {
+        this.onRefresh();
+    }
+
+    onRefresh() {
+        const { lastResponse } = this.props;
+
+        if (!lastResponse || lastResponse.loading === true) {
+            return;
+        }
         this.props.fetchEndpoint(this.props.server, this.props.endpoint);
     }
+
     renderLastResponse() {
         const { lastResponse } = this.props;
         if (!lastResponse) {
             return <Text>No data</Text>;
         }
-        const { loading, data } = lastResponse;
-        if (loading) {
-            return (
-                <View style={styles.spinnerContainer} >
-                    <Spinner />
-                </View>
-            );
-        }
+        const { data } = lastResponse;
         if (!data) {
             return <Text>No data</Text>;
-        }       
+        }
 
         return (
             <JSONTree
@@ -36,8 +43,17 @@ class EndpointDetails extends Component {
         );
     }
     render() {
+        const { lastResponse: { time } } = this.props;
         return (
-            <ScrollView>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.props.loading}
+                        onRefresh={this.onRefresh}
+                    />
+                }
+            >
+                <Text style={styles.actualizationDateContainer}>{time.toLocaleString()}</Text>
                 {this.renderLastResponse()}
             </ScrollView>
         );
@@ -65,8 +81,10 @@ const theme = {
 };
 
 const styles = {
-    spinnerContainer: {
-        padding: 10
+    actualizationDateContainer: {
+        padding: 10,
+        backgroundColor: 'white',
+        textAlign: 'center'
     }
 };
 const mapStateToProps = (state) => {
@@ -74,7 +92,11 @@ const mapStateToProps = (state) => {
     const server = state.servers[serverId];
     const endpoint = { ...server.endpoints[endpointId], endpointId };
     const lastResponse = state.fetchedData[endpointId];
-    return { server, endpoint, lastResponse };
+    let loading = false;
+    if (lastResponse) {
+        loading = lastResponse.loading;
+    }
+    return { server, endpoint, lastResponse, loading };
 };
 
 export default connect(mapStateToProps, { fetchEndpoint })(EndpointDetails);
