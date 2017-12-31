@@ -24,10 +24,6 @@ export const INITIAL_ENDPOINTS = {
     e2: {
         endpointName: 'Metrics',
         endpointUrl: '/metrics',
-    },
-    e3: {
-        endpointName: 'Trace',
-        endpointUrl: '/trace',
     }
 };
 
