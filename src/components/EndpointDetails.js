@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, Text, View, RefreshControl } from 'react-native';
+import { ScrollView, Text, RefreshControl } from 'react-native';
 import JSONTree from 'react-native-json-tree';
-import { Spinner } from './common';
 
 import { fetchEndpoint } from '../actions';
 
@@ -46,7 +45,7 @@ class EndpointDetails extends Component {
         const { lastResponse } = this.props;
         let timeString = '';
         if (lastResponse) {
-            let time = lastResponse.time;
+            const time = lastResponse.time;
             timeString = time ? time.toLocaleString() : '';
         }
         return (

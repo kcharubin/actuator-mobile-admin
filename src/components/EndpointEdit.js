@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
-import { Switch } from 'react-native';
 import { CardSection, Card, Input } from './common';
 import DoubleButton from './DoubleButton';
 import LabeledSwitch from './LabeledSwitch';
@@ -81,10 +80,9 @@ class EndpointEdit extends Component {
                 </CardSection>
                 <CardSection>
                     <LabeledSwitch
-                      onValueChange={val => this.props.updateForm({ prop: 'isHealthEndpoint', value: val })}
-                      value={this.props.isHealthEndpoint}
-                      label="Check if it is Health endpoint
-                      and should be automatically verifed on app launch. Application will check if 'status'=='UP'"
+                        onValueChange={val => this.props.updateForm({ prop: 'isHealthEndpoint', value: val })}
+                        value={this.props.isHealthEndpoint}
+                        label="Check if it is Health endpoint and should be automatically verifed on app launch. Application will check if 'status'=='UP'"
                     />
                 </CardSection>
                 <CardSection>
