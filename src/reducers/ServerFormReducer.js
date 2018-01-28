@@ -44,7 +44,7 @@ export default (state = INITIAL_STATE, action) => {
         case NEW_ENDPOINT: {
             return { ...state, ...INITIAL_ENDPOINT_STATE };
         }
-  
+
         default:
             return state;
     }

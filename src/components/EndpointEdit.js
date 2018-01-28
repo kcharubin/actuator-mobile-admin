@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
+import { Switch } from 'react-native';
 import { CardSection, Card, Input } from './common';
 import DoubleButton from './DoubleButton';
+import LabeledSwitch from './LabeledSwitch';
 import { updateForm, updateServer, navigateBack } from '../actions';
 import RightNavButton from './RightNavButton';
 
 const mapStateToProps = (state) => {
-    const { endpointName, endpointUrl } = state.form;
+    const { endpointName, endpointUrl, isHealthEndpoint } = state.form;
     const { serverId, endpointId } = state.selectedOption;
     const server = { ...state.servers[serverId], serverId };
-    return { endpointName, endpointUrl, server, endpointId };
+    return { endpointName, endpointUrl, server, endpointId, isHealthEndpoint };
 };
 
 const RightNavButtonConnected = connect(
@@ -48,11 +50,11 @@ class EndpointEdit extends Component {
     componentDidMount() {
         this.props.navigation.setParams({ deleteEndpoint: this.deleteEndpoint });
     }
-   
+
     saveEndpoint() {
         const endpointId = this.props.endpointId || uuid();
-        const { endpointName, endpointUrl, server } = this.props;
-        const endpoint = { endpointName, endpointUrl };
+        const { endpointName, endpointUrl, server, isHealthEndpoint } = this.props;
+        const endpoint = { endpointName, endpointUrl, isHealthEndpoint };
         server.endpoints[endpointId] = endpoint;
         this.props.updateServer(server);
         this.props.navigateBack();
@@ -75,6 +77,14 @@ class EndpointEdit extends Component {
                         value={this.props.endpointUrl}
                         onChangeText={text => this.props.updateForm({ prop: 'endpointUrl', value: text })}
                         placeholder='/health'
+                    />
+                </CardSection>
+                <CardSection>
+                    <LabeledSwitch
+                      onValueChange={val => this.props.updateForm({ prop: 'isHealthEndpoint', value: val })}
+                      value={this.props.isHealthEndpoint}
+                      label="Check if it is Health endpoint
+                      and should be automatically verifed on app launch. Application will check if 'status'=='UP'"
                     />
                 </CardSection>
                 <CardSection>
