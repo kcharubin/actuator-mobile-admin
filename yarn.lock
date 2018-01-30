@@ -4204,6 +4204,10 @@ rechoir@^0.6.2:
   dependencies:
     resolve "^1.1.6"
 
+reduce-reducers@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/reduce-reducers/-/reduce-reducers-0.1.2.tgz#fa1b4718bc5292a71ddd1e5d839c9bea9770f14b"
+
 redux-persist@^5.3.4:
   version "5.3.4"
   resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-5.3.4.tgz#7d021714e0cbf1835c2c27f2f7e1d19e61e3fd4e"

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, ListView, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { serversToArray } from '../helpers';
 
 import { Button, TransparentCardSection } from './common';
 import ListItem from './ListItem';
@@ -34,6 +35,9 @@ class MainScreen extends Component {
                 title={server.serverName}
                 onPress={() => this.props.selectServer(server)}
                 accessoryTitle="Edit"
+                loading={server.loading}
+                isError={server.isError}
+                isHealthy={server.isHealthy && !server.isError}
                 onAccessoryPress={() => this.props.editServer(server)}
             />
         );
@@ -96,9 +100,8 @@ const styles = StyleSheet.create(
 );
 const mapStateToProps = state => (
     {
-        servers: _.map(state.servers, (val, serverId) => ({ ...val, serverId }))
+        servers: serversToArray(state.servers)
     }
 );
 
 export default connect(mapStateToProps, { createServer, selectServer, editServer })(MainScreen);
-// export default MainScreen;

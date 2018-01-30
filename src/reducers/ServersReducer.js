@@ -2,15 +2,18 @@ import _ from 'lodash';
 import uuid from 'uuid';
 
 import {
-    SERVER_TEMPLATE,
     INITIAL_ENDPOINTS,
     ADD_SERVER,
     UPDATE_SERVER,
-    DELETE_SERVER
+    DELETE_SERVER,
+    FETCH_ENDPOINT,
+    FETCH_ENDPOINT_FAILURE,
+    FETCH_ENDPOINT_SUCCESS
 } from '../actions/types';
 
 const INITIAL_STATE = {
 };
+
 
 
 export default (state = INITIAL_STATE, action) => {
@@ -32,6 +35,21 @@ export default (state = INITIAL_STATE, action) => {
         }
         case DELETE_SERVER: {
             return _.omit(state, [action.payload]);
+        }
+        case FETCH_ENDPOINT: {
+            console.log('FETCH_ENPOINT');
+            console.log(action);
+            return state;
+        }
+        case FETCH_ENDPOINT_FAILURE: {
+            console.log('FETCH_ENDPOINT_FAILURE');
+            console.log(action);
+            return state;
+        }
+        case FETCH_ENDPOINT_SUCCESS: {
+            console.log('FETCH_ENDPOINT_SUCCESS');
+            console.log(action);
+            return state;
         }
         default:
             return state;

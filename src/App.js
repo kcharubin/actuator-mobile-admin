@@ -16,7 +16,7 @@ export default class App extends Component {
     const storeConfig = {
       key: 'rootStore', // key is required
       storage,
-      blacklist: ['nav']
+      blacklist: ['nav', 'fetchedData'],
     };
     const persistedReducer = persistReducer(storeConfig, reducers);
     const middleware = applyMiddleware(thunk);

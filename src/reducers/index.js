@@ -5,7 +5,7 @@ import ServerFormReducer from './ServerFormReducer';
 import FetchedDataReducer from './FetchedDataReducer';
 import NavigationReducer from './NavigationReducer';
 
-export default combineReducers({
+const combinedReducer = combineReducers({
     servers: ServersReducer,
     selectedOption: SelectServerReducer,
     form: ServerFormReducer,
@@ -13,3 +13,4 @@ export default combineReducers({
     nav: NavigationReducer
 });
 
+export default combinedReducer;

@@ -3,6 +3,7 @@ import { View, StyleSheet, ListView } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import { endpointsToArray } from '../helpers';
 import {
     selectServerEndpoint,
     createServerEndpoint,
@@ -87,9 +88,7 @@ const styles = StyleSheet.create(
 const mapStateToProps = state => {
     const { servers, selectedOption: { serverId } } = state;
     return {
-        endpoints: _.map(servers[serverId].endpoints, (val, endpointId) => (
-            { ...val, endpointId }
-        )),
+        endpoints: endpointsToArray(servers[serverId].endpoints),
         server: { ...servers[serverId], serverId }
     };
 };

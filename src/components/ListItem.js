@@ -1,25 +1,37 @@
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 
-import { CardSection } from './common';
+import { CardSection, Spinner } from './common';
 
-
-const ListItem = ({ title, onPress, onAccessoryPress, accessoryTitle }) => {
-    const { textStyle, btnContainer, editStyle } = styles;
-    return (
-        <TouchableOpacity onPress={() => onPress()}>
-            <CardSection style={{ paddingTop: 0, paddingBottom: 0 }}>
-                <View style={btnContainer}>
-                    <Text style={textStyle}>{title}</Text>
-                    <TouchableOpacity onPress={() => onAccessoryPress()}>
-                        <Text style={editStyle}>{accessoryTitle}</Text>
-                    </TouchableOpacity>
-                </View>
-            </CardSection>
-        </TouchableOpacity>
-
-    );
+const renderAccessory = (loading, accessoryTitle) => {
+    const { editStyle } = styles;
+    if (loading) {
+        return <Spinner size="small" />;
+    }
+    return <Text style={editStyle}>{accessoryTitle}</Text>;
 };
+
+const ListItem =
+    ({ title, onPress, onAccessoryPress, accessoryTitle, loading, isError, isHealthy }) => {
+        const { textStyle, btnContainer, errorStyle, normalStyle, healthyStyle, cardSectionStyle } = styles;
+        let itemStyle = normalStyle;
+        if (isHealthy) itemStyle = healthyStyle;
+        if (isError) itemStyle = errorStyle;
+        
+        return (
+            <TouchableOpacity style={itemStyle} onPress={() => onPress()}>
+                <CardSection style={cardSectionStyle}>
+                    <View style={btnContainer}>
+                        <Text style={textStyle}>{title}</Text>
+                        <TouchableOpacity onPress={() => onAccessoryPress()}>
+                            {renderAccessory(loading, accessoryTitle)}
+                        </TouchableOpacity>
+                    </View>
+                </CardSection>
+            </TouchableOpacity>
+
+        );
+    };
 const styles = StyleSheet.create({
     btnContainer: {
         padding: 0,
@@ -27,8 +39,23 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         flex: 1
-
     },
+    cardSectionStyle: {
+        paddingTop: 0,
+        paddingBottom: 0,
+        marginRight: 5,
+        backgroundColor: 'transparent'
+    },
+    errorStyle: {
+        backgroundColor: 'red'
+    },
+    normalStyle: {
+        backgroundColor: 'white'
+    },
+    healthyStyle: {
+        backgroundColor: 'green'
+    },
+
     textStyle: {
         fontSize: 18,
         fontWeight: 'bold',
