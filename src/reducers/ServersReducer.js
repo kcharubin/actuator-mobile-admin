@@ -14,7 +14,12 @@ import {
 const INITIAL_STATE = {
 };
 
-
+const arrayToObjectsWithUuid = (array) =>
+    array.reduce((o, item) => {
+        const obj = o;
+        obj[uuid()] = item;
+        return obj;
+    }, {});
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -26,7 +31,8 @@ export default (state = INITIAL_STATE, action) => {
                 serverId = uuid();
             }
             const servers = _.clone(state, true);
-            servers[serverId] = { ...server, serverId, endpoints: { ...INITIAL_ENDPOINTS } };
+            const endpoints = { ...arrayToObjectsWithUuid(INITIAL_ENDPOINTS) };
+            servers[serverId] = { ...server, serverId, endpoints };
             return servers;
         }
         case UPDATE_SERVER: {

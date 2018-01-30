@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { View, ListView, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
-import _ from 'lodash';
-import { serversToArray } from '../helpers';
+import {
+    serversToArray,
+    checkIfServerHasError,
+    checkIfServerIsHealthy,
+    checkIfServerIsSyncing
+} from '../helpers';
 
 import { Button, TransparentCardSection } from './common';
 import ListItem from './ListItem';
 import { createServer, selectServer, editServer } from '../actions/ServerActions';
+import { fetchEndpoint } from '../actions/index';
 
 
 class MainScreen extends Component {
@@ -30,14 +35,17 @@ class MainScreen extends Component {
     }
 
     renderRow(server) {
+        const { fetchedData } = this.props;
+        const loading = checkIfServerIsSyncing(server, fetchedData);
+        const isError = checkIfServerHasError(server, fetchedData);
+
         return (
             <ListItem
                 title={server.serverName}
                 onPress={() => this.props.selectServer(server)}
                 accessoryTitle="Edit"
-                loading={server.loading}
-                isError={server.isError}
-                isHealthy={server.isHealthy && !server.isError}
+                loading={loading}
+                isError={isError}
                 onAccessoryPress={() => this.props.editServer(server)}
             />
         );
@@ -100,7 +108,8 @@ const styles = StyleSheet.create(
 );
 const mapStateToProps = state => (
     {
-        servers: serversToArray(state.servers)
+        servers: serversToArray(state.servers),
+        fetchedData: state.fetchedData
     }
 );
 

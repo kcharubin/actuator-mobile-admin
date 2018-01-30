@@ -16,16 +16,16 @@ export const FETCH_ENDPOINT_FAILURE = 'fetch_endpoint_failure';
 export const DELETE_SERVER = 'delete_server';
 export const NAVIGATE = 'navigate_action';
 
-export const INITIAL_ENDPOINTS = {
-    e1: {
+export const INITIAL_ENDPOINTS = [
+    {       
         endpointName: 'Health',
         endpointUrl: '/health',
     },
-    e2: {
+    {
         endpointName: 'Metrics',
         endpointUrl: '/metrics',
     }
-};
+];
 
 export const SERVER_TEMPLATE = {
     serverName: 'moj server',

@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ListView } from 'react-native';
 import { connect } from 'react-redux';
-import _ from 'lodash';
-
-import { endpointsToArray } from '../helpers';
 import {
     selectServerEndpoint,
     createServerEndpoint,
     editServerEndpoint
 } from '../actions/ServerActions';
+import {
+    checkIfEndpointIsError,
+    checkIfEndpointIsSyncing,
+    checkIfEndpointIsHealthy,
+    endpointsToArray
+} from '../helpers';
+
 import { TransparentCardSection, Button } from './common';
 import ListItem from './ListItem';
 
 class ServerEndpoints extends Component {
-
-
     constructor(props) {
         super(props);
         this.renderRow = this.renderRow.bind(this);
     }
-
 
     componentWillMount() {
         this.createDataSource(this.props);
@@ -27,10 +28,6 @@ class ServerEndpoints extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.createDataSource(nextProps);
-    }
-
-    saveDetails() {
-
     }
 
     createDataSource({ endpoints }) {
@@ -41,10 +38,20 @@ class ServerEndpoints extends Component {
     }
 
     renderRow(endpoint) {
+        const { fetchedData } = this.props;
+        const loading = checkIfEndpointIsSyncing(endpoint, fetchedData);
+        const isError = checkIfEndpointIsError(endpoint, fetchedData);
+        const isHealthy = checkIfEndpointIsHealthy(endpoint, fetchedData);
+        console.log("RR: endpoint");
+        console.log(endpoint);
+
         return (
             <ListItem
                 title={endpoint.endpointName}
                 onPress={() => this.props.selectServerEndpoint(endpoint)}
+                loading={loading}
+                isError={isError}
+                isHealthy={isHealthy && !isError}
                 accessoryTitle="Edit"
                 onAccessoryPress={() => this.props.editServerEndpoint(endpoint)}
             />
@@ -86,10 +93,11 @@ const styles = StyleSheet.create(
 
 );
 const mapStateToProps = state => {
-    const { servers, selectedOption: { serverId } } = state;
+    const { servers, selectedOption: { serverId }, fetchedData } = state;
     return {
         endpoints: endpointsToArray(servers[serverId].endpoints),
-        server: { ...servers[serverId], serverId }
+        server: { ...servers[serverId], serverId },
+        fetchedData
     };
 };
 
