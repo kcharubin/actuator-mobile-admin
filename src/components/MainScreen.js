@@ -29,7 +29,8 @@ class MainScreen extends Component {
         this.renderRow = this.renderRow.bind(this);
         this.onRefresh = this.onRefresh.bind(this);
         this.state = {
-            appState: AppState.currentState
+            appState: AppState.currentState,
+            actualizationStart: ''
         };
     }
 
@@ -91,7 +92,12 @@ class MainScreen extends Component {
             />
         );
     }
-
+    renderActualizationDate() {
+        return (
+            <Text style={styles.actualizationDateContainer}>
+                {`Last sync started at: ${(new Date()).toLocaleString()}`}
+            </Text>);
+    }
     renderAddButton() {
         return (
             <TransparentCardSection>
@@ -108,6 +114,7 @@ class MainScreen extends Component {
         if (this.DataSource.getRowCount()) {
             return (
                 <View style={contentContainer}>
+                    {this.renderActualizationDate()}
                     <ListView
                         refreshControl={
                             <RefreshControl
@@ -136,6 +143,10 @@ class MainScreen extends Component {
 }
 const styles = StyleSheet.create(
     {
+        actualizationDateContainer: {
+            padding: 10,
+            textAlign: 'left'
+        },
         separatorStyle: {
             flex: 1,
             height: 1,
