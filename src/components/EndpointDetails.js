@@ -11,10 +11,6 @@ class EndpointDetails extends Component {
         this.onRefresh = this.onRefresh.bind(this);
     }
 
-    componentDidMount() {
-        this.onRefresh();
-    }
-
     onRefresh() {
         const { lastResponse } = this.props;
 
