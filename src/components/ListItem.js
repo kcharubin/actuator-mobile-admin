@@ -1,7 +1,7 @@
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 
-import { CardSection, Spinner } from './common';
+import { CardSection, TransparentCardSection, Spinner } from './common';
 
 const renderAccessory = (loading, accessoryTitle) => {
     const { editStyle } = styles;
@@ -17,17 +17,17 @@ const ListItem =
         let itemStyle = normalStyle;
         if (isHealthy) itemStyle = healthyStyle;
         if (isError) itemStyle = errorStyle;
-        
+
         return (
             <TouchableOpacity style={itemStyle} onPress={() => onPress()}>
-                <CardSection style={cardSectionStyle}>
+                <TransparentCardSection style={cardSectionStyle}>
                     <View style={btnContainer}>
                         <Text style={textStyle}>{title}</Text>
                         <TouchableOpacity onPress={() => onAccessoryPress()}>
                             {renderAccessory(loading, accessoryTitle)}
                         </TouchableOpacity>
                     </View>
-                </CardSection>
+                </TransparentCardSection>
             </TouchableOpacity>
 
         );
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     healthyStyle: {
-        backgroundColor: 'green'
+        backgroundColor: '#dfd'
     },
 
     textStyle: {

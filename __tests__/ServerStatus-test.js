@@ -30,7 +30,7 @@ const hpData3 = {
 const endpoint1 = { endpointId: "e1", isHealthEndpoint: true };
 const endpoint2 = { endpointId: "e2", isHealthEndpoint: true };
 const endpoint3 = { endpointId: "e3", isHealthEndpoint: true };
-const endpoint3 = { endpointId: "e4", isHealthEndpoint: true };
+const endpoint4 = { endpointId: "e4", isHealthEndpoint: true };
 
 const server1 = { serverId: "1", endpoints: [endpoint1] };
 const server2 = { serverId: "2", endpoints: [endpoint1, endpoint3] };
@@ -49,7 +49,7 @@ const fetchedData = {
     e5: { time: "Sun Jan 28 2018 19:25:27 GMT+0100 (CET)", data: {}, loading: false, isSuccess: false, serverId: serverId3 },
     e6: { time: "Sun Dec 31 2017 14:43:00 GMT+0100 (CET)", data: hpData2, loading: false, isSuccess: true, serverId:serverId4 },
 }
-const { e1, e2, e3, e4 } = fetchedData;
+const { e1, e2, e3, e4, e5, e6 } = fetchedData;
 
 describe('test if server is syncing (sending call to acutator api)', () => {
     test('Check if server 1 is syncing', () => {
@@ -88,6 +88,10 @@ describe('Check checkIfResponseIsError api responses', () => {
     test('check status !== UP and response isSuccess = true', () => {
         expect(checkIfResponseIsError(e4, true)).toEqual(true);
     });
+    test('check  response isSuccess = false', () => {
+        expect(checkIfResponseIsError(e5, false)).toEqual(true);
+    });
+
 });
 describe('Check checkIfResponseIsSuccess api responses', () => {
     test('check status UP and resonse isSuccess = true', () => {
@@ -111,4 +115,5 @@ describe('Check endpoints statuses', () => {
     test('check status !== UP and response isSuccess = true', () => {
         expect(checkIfEndpointIsHealthy(endpoint3, fetchedData)).toEqual(false);
     });
+
 });

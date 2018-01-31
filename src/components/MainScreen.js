@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
-import { View, ListView, StyleSheet, Text } from 'react-native';
+import {
+    View,
+    ListView,
+    StyleSheet,
+    Text,
+    RefreshControl,
+    AppState
+} from 'react-native';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import {
     serversToArray,
+    endpointsToArray,
     checkIfServerHasError,
     checkIfServerIsHealthy,
     checkIfServerIsSyncing
@@ -18,13 +27,45 @@ class MainScreen extends Component {
     constructor(props) {
         super(props);
         this.renderRow = this.renderRow.bind(this);
+        this.onRefresh = this.onRefresh.bind(this);
+        this.state = {
+            appState: AppState.currentState
+        };
     }
+
     componentWillMount() {
         this.createDataSource(this.props);
     }
 
+    componentDidMount() {
+        AppState.addEventListener('change', this.handleAppStateChange);
+        this.onRefresh();
+    }
+
+
     componentWillReceiveProps(nextProps) {
         this.createDataSource(nextProps);
+    }
+    componentWillUnmount() {
+        AppState.removeEventListener('change', this.handleAppStateChange);
+    }
+
+    onRefresh() {
+        this.props.servers.forEach(server => {
+            const endpoints = endpointsToArray(server.endpoints);
+            if (endpoints) {
+                endpoints.forEach(endpoint => {
+                    this.props.fetchEndpoint(server, endpoint);
+                });
+            }
+        });
+    }
+
+    handleAppStateChange = (nextAppState) => {
+        if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+            this.onRefresh();
+        }
+        this.setState({ appState: nextAppState });
     }
 
     createDataSource({ servers }) {
@@ -33,23 +74,24 @@ class MainScreen extends Component {
         });
         this.DataSource = ds.cloneWithRows(servers);
     }
-
+    renderSeparator() {
+        return <View style={styles.separatorStyle} />;
+    }
     renderRow(server) {
-        const { fetchedData } = this.props;
-        const loading = checkIfServerIsSyncing(server, fetchedData);
-        const isError = checkIfServerHasError(server, fetchedData);
-
+        const { serverName, loading, isError, isHealthy } = server;
         return (
             <ListItem
-                title={server.serverName}
+                title={serverName}
                 onPress={() => this.props.selectServer(server)}
                 accessoryTitle="Edit"
                 loading={loading}
                 isError={isError}
+                isHealthy={isHealthy}
                 onAccessoryPress={() => this.props.editServer(server)}
             />
         );
     }
+
     renderAddButton() {
         return (
             <TransparentCardSection>
@@ -67,10 +109,16 @@ class MainScreen extends Component {
             return (
                 <View style={contentContainer}>
                     <ListView
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.props.loading}
+                                onRefresh={this.onRefresh}
+                            />}
                         style={listStyle}
                         enableEmptySections
                         dataSource={this.DataSource}
                         renderRow={this.renderRow}
+                        renderSeparator={this.renderSeparator}
                     />
                     {this.renderAddButton()}
                 </View>
@@ -88,6 +136,12 @@ class MainScreen extends Component {
 }
 const styles = StyleSheet.create(
     {
+        separatorStyle: {
+            flex: 1,
+            height: 1,
+            borderBottomColor: '#bbb',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+        },
         listStyle: {
             flex: 1,
             padding: 5
@@ -106,11 +160,31 @@ const styles = StyleSheet.create(
     }
 
 );
-const mapStateToProps = state => (
-    {
-        servers: serversToArray(state.servers),
-        fetchedData: state.fetchedData
-    }
-);
+const mapStateToProps = state => {
+    const { fetchedData } = state;
+    const servers = _.map(serversToArray(state.servers), server => (
+        {
+            ...server,
+            loading: checkIfServerIsSyncing(server, fetchedData),
+            isError: checkIfServerHasError(server, fetchedData),
+            isHealthy: checkIfServerIsHealthy(server, fetchedData)
+        }
+    ));
+    return (
+        {
+            servers,
+            fetchedData,
+            loading: false
+        }
+    );
+};
 
-export default connect(mapStateToProps, { createServer, selectServer, editServer })(MainScreen);
+export default connect(
+    mapStateToProps,
+    {
+        createServer,
+        selectServer,
+        editServer,
+        fetchEndpoint
+    }
+)(MainScreen);

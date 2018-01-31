@@ -12,7 +12,7 @@ const INITIAL_RESPONSE_PARAMS = {
     loading: true,
 };
 
-const getEndpointAndServerId = (action) => {
+export const getEndpointAndServerId = (action) => {
     const { endpointId } = action.endpoint;
     const { serverId } = action.server;
     return { endpointId, serverId };

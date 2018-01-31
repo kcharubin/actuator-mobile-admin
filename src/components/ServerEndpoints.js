@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ListView } from 'react-native';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import {
     selectServerEndpoint,
     createServerEndpoint,
@@ -38,13 +39,7 @@ class ServerEndpoints extends Component {
     }
 
     renderRow(endpoint) {
-        const { fetchedData } = this.props;
-        const loading = checkIfEndpointIsSyncing(endpoint, fetchedData);
-        const isError = checkIfEndpointIsError(endpoint, fetchedData);
-        const isHealthy = checkIfEndpointIsHealthy(endpoint, fetchedData);
-        console.log("RR: endpoint");
-        console.log(endpoint);
-
+        const { loading, isHealthy, isError } = endpoint;
         return (
             <ListItem
                 title={endpoint.endpointName}
@@ -67,6 +62,7 @@ class ServerEndpoints extends Component {
                     enableEmptySections
                     dataSource={this.DataSource}
                     renderRow={this.renderRow}
+                    renderSeparator={() => <View style={styles.separatorStyle} />}
                 />
                 <TransparentCardSection>
                     <Button
@@ -81,6 +77,12 @@ class ServerEndpoints extends Component {
 }
 const styles = StyleSheet.create(
     {
+        separatorStyle: {
+            flex: 1,
+            height: 1,
+            borderBottomColor: '#bbb',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+        },
         listStyle: {
             flex: 1,
             padding: 5
@@ -94,8 +96,16 @@ const styles = StyleSheet.create(
 );
 const mapStateToProps = state => {
     const { servers, selectedOption: { serverId }, fetchedData } = state;
+    
+    const endpoints = _.map(endpointsToArray(servers[serverId].endpoints), endpoint => ({
+        ...endpoint,
+        loading: checkIfEndpointIsSyncing(endpoint, fetchedData),
+        isError: checkIfEndpointIsError(endpoint, fetchedData),
+        isHealthy: checkIfEndpointIsHealthy(endpoint, fetchedData)
+    }
+    ));
     return {
-        endpoints: endpointsToArray(servers[serverId].endpoints),
+        endpoints,
         server: { ...servers[serverId], serverId },
         fetchedData
     };

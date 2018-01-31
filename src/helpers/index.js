@@ -10,7 +10,6 @@ export const serversToArray = (servers) => {
 };
 
 
-
 export const checkIfEndpointIsSyncing = (endpoint, fetchedData) => {
     if (!fetchedData || !endpoint) {
         return false;
@@ -34,7 +33,6 @@ export const checkIfEndpointIsError = (endpoint, fetchedData) => {
 };
 
 export const checkIfResponseIsError = (response, isHealthPoint = false) => {
-    console.log(response, isHealthPoint);
     if (!response) {
         return false;
     }

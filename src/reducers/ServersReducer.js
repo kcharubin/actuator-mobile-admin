@@ -14,10 +14,15 @@ import {
 const INITIAL_STATE = {
 };
 
-const arrayToObjectsWithUuid = (array) =>
-    array.reduce((o, item) => {
+const arrayToObjectsWithUuid = (array, indexName) =>
+    array.reduce((o, itm) => {
         const obj = o;
-        obj[uuid()] = item;
+        const item = itm;
+        const id = uuid();
+        if (indexName) {
+            item[indexName] = id;
+        }
+        obj[id] = item;
         return obj;
     }, {});
 
@@ -31,7 +36,7 @@ export default (state = INITIAL_STATE, action) => {
                 serverId = uuid();
             }
             const servers = _.clone(state, true);
-            const endpoints = { ...arrayToObjectsWithUuid(INITIAL_ENDPOINTS) };
+            const endpoints = { ...arrayToObjectsWithUuid(INITIAL_ENDPOINTS, 'endpointId') };
             servers[serverId] = { ...server, serverId, endpoints };
             return servers;
         }
@@ -41,22 +46,7 @@ export default (state = INITIAL_STATE, action) => {
         }
         case DELETE_SERVER: {
             return _.omit(state, [action.payload]);
-        }
-        case FETCH_ENDPOINT: {
-            console.log('FETCH_ENPOINT');
-            console.log(action);
-            return state;
-        }
-        case FETCH_ENDPOINT_FAILURE: {
-            console.log('FETCH_ENDPOINT_FAILURE');
-            console.log(action);
-            return state;
-        }
-        case FETCH_ENDPOINT_SUCCESS: {
-            console.log('FETCH_ENDPOINT_SUCCESS');
-            console.log(action);
-            return state;
-        }
+        }        
         default:
             return state;
     }
